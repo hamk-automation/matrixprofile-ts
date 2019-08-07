@@ -68,7 +68,7 @@ def calc_distance_profile(X, y, n, m, meanx, sigmax):
     dist = m - dist
     dist = np.real(2 * dist)
 
-    return np.absolute(np.sqrt(dist))
+    return np.sqrt(np.absolute(dist))
 
 
 def calc_exclusion_zone(window_size):
@@ -134,7 +134,7 @@ def calc_dotproduct_idx(dotproduct, m, mp, idx, sigmax, idx_nn, meanx):
 
 def calc_end_idx(profile_len, idx, step_size, idx_diff):
     return np.min([profile_len - 1, idx + step_size - 1, 
-                  profile_len - idx_diff])
+                  profile_len - idx_diff - 1])
 
 
 def calc_dotproduct_end_idx(ts, dp, idx, m, endidx, idx_nn, idx_diff):
@@ -226,7 +226,7 @@ def apply_update_positions(matrix_profile, mp_index, refine_distance, beginidx,
     if len(update_pos2) > 0:
         update_pos2 = update_pos2 + beginidx
         matrix_profile[update_pos2 + idx_diff] = refine_distance[update_pos2]
-        mp_index[update_pos2 + idx_diff] = orig_index[update_pos2] - idx_diff
+        mp_index[update_pos2 + idx_diff] = orig_index[update_pos2]
 
     return (matrix_profile, mp_index)
 
